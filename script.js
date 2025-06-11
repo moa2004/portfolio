@@ -276,3 +276,47 @@ navStyle.textContent = `
 `;
 document.head.appendChild(navStyle);
 
+
+// Dark Mode Toggle Functionality
+const themeToggle = document.getElementById('theme-toggle');
+const body = document.body;
+
+// Check for saved theme preference or default to light mode
+const currentTheme = localStorage.getItem('theme') || 'light';
+body.setAttribute('data-theme', currentTheme);
+
+// Update toggle icon based on current theme
+function updateToggleIcon() {
+    const icon = themeToggle.querySelector('i');
+    const currentTheme = body.getAttribute('data-theme');
+    
+    if (currentTheme === 'dark') {
+        icon.className = 'fas fa-sun';
+    } else {
+        icon.className = 'fas fa-moon';
+    }
+}
+
+// Initialize icon
+updateToggleIcon();
+
+// Theme toggle event listener
+themeToggle.addEventListener('click', () => {
+    const currentTheme = body.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    
+    body.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    
+    updateToggleIcon();
+    
+    // Add a subtle animation effect
+    themeToggle.style.transform = 'scale(0.9)';
+    setTimeout(() => {
+        themeToggle.style.transform = 'scale(1)';
+    }, 150);
+});
+
+// Smooth transition for theme changes
+body.style.transition = 'background-color 0.3s ease, color 0.3s ease';
+
